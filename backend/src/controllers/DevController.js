@@ -41,12 +41,23 @@ module.exports = {
     return res.json(dev);
   },
 
-  async update() {},
+  async update(req, res) {
+    const { id } = req.params;
+    const body = req.body;
+
+    if (body.techs) {
+      body.techs = parseStringAsArray(body.techs);
+    }
+
+    const dev = await Dev.findByIdAndUpdate(id, body, { new: true });
+
+    return res.json(dev);
+  },
 
   async destroy(req, res) {
     const { id } = req.params;
 
-    const dev = await Dev.remove({ _id: id });
+    const dev = await Dev.findByIdAndDelete(id);
 
     return res.json(dev);
   }

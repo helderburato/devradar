@@ -39,5 +39,15 @@ module.exports = {
     }
 
     return res.json(dev);
+  },
+
+  async update() {},
+
+  async destroy(req, res) {
+    const { id } = req.params;
+
+    const dev = await Dev.remove({ _id: id });
+
+    return res.json(dev);
   }
 };

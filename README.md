@@ -10,13 +10,7 @@ Project created in the Omnistack Week 10.
 
 ## Notes
 
-### Domain
-
-- Index: List all;
-- Show: Get by id or _another field_;
-- Store: Save body data;
-- Update: Update by id or _another field_;
-- Destroy: Delete by id or _another field_;
+- [Controller](notes/controller.md);
 
 ## Thanks To
 

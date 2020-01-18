@@ -1,6 +1,12 @@
-# devradar
+# DevRadar - OmniStack Week 10
 
-Projeto resultado da Semana Omnistack #10
+Project created in the Omnistack Week 10.
+
+## Stack
+
+- **Backend**: Node.js / MongoDB;
+- **Frontend**: ReactJS;
+- **Mobile**: React Native;
 
 ## Notes
 

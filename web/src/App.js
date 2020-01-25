@@ -2,9 +2,14 @@ import React, { useEffect, useState } from 'react';
 import './app.css';
 import './global.css';
 import './main.css';
+import api from './services/api';
 import './sidebar.css';
 
 function App() {
+  const [devs, setDevs] = useState([]);
+
+  const [github_username, setGithubUsername] = useState('');
+  const [techs, setTechs] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
 
@@ -27,20 +32,58 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    async function loadDevs() {
+      const response = await api.get('/devs');
+
+      setDevs(response.data);
+    }
+
+    loadDevs();
+  }, []);
+
+  async function handleAddDev(event) {
+    event.preventDefault();
+
+    const response = await api.post('/devs', {
+      github_username,
+      techs,
+      latitude,
+      longitude
+    });
+
+    setGithubUsername('');
+    setTechs('');
+
+    setDevs([...devs, response.data]);
+  }
+
   return (
     <div id="app">
       <aside>
         <strong>Cadastrar</strong>
 
-        <form>
+        <form onSubmit={handleAddDev}>
           <div className="input-block">
             <label htmlFor="github_username">Usuário do Github</label>
-            <input name="username_github" id="github_username" required />
+            <input
+              name="username_github"
+              id="github_username"
+              value={github_username}
+              onChange={event => setGithubUsername(event.target.value)}
+              required
+            />
           </div>
 
           <div className="input-block">
             <label htmlFor="techs">Tecnologias</label>
-            <input name="techs" id="techs" required />
+            <input
+              name="techs"
+              id="techs"
+              value={techs}
+              onChange={event => setTechs(event.target.value)}
+              required
+            />
           </div>
 
           <div className="input-group">
@@ -75,94 +118,24 @@ function App() {
 
       <main>
         <ul>
-          <li className="dev-item">
-            <header>
-              <img
-                src="https://avatars3.githubusercontent.com/u/862575?s=460&v=4"
-                alt="Helder Burato Berto"
-              />
+          {devs.map(dev => (
+            <li key={dev._id} className="dev-item">
+              <header>
+                <img src={dev.avatar_url} alt={dev.name} />
 
-              <div className="user-info">
-                <strong>Helder Burato Berto</strong>
-                <span>ReactJS, React Native, NodeJS</span>
-              </div>
-            </header>
+                <div className="user-info">
+                  <strong>{dev.name}</strong>
+                  <span>{dev.techs.join(', ')}</span>
+                </div>
+              </header>
 
-            <p>
-              Front-end Developer • Learning, practicing and creating this is my
-              motto
-            </p>
+              <p>{dev.bio}</p>
 
-            <a href="https://github.com/helderburato">
-              Acessar perfil no Github
-            </a>
-          </li>
-          <li className="dev-item">
-            <header>
-              <img
-                src="https://avatars3.githubusercontent.com/u/862575?s=460&v=4"
-                alt="Helder Burato Berto"
-              />
-
-              <div className="user-info">
-                <strong>Helder Burato Berto</strong>
-                <span>ReactJS, React Native, NodeJS</span>
-              </div>
-            </header>
-
-            <p>
-              Front-end Developer • Learning, practicing and creating this is my
-              motto
-            </p>
-
-            <a href="https://github.com/helderburato">
-              Acessar perfil no Github
-            </a>
-          </li>
-          <li className="dev-item">
-            <header>
-              <img
-                src="https://avatars3.githubusercontent.com/u/862575?s=460&v=4"
-                alt="Helder Burato Berto"
-              />
-
-              <div className="user-info">
-                <strong>Helder Burato Berto</strong>
-                <span>ReactJS, React Native, NodeJS</span>
-              </div>
-            </header>
-
-            <p>
-              Front-end Developer • Learning, practicing and creating this is my
-              motto
-            </p>
-
-            <a href="https://github.com/helderburato">
-              Acessar perfil no Github
-            </a>
-          </li>
-          <li className="dev-item">
-            <header>
-              <img
-                src="https://avatars3.githubusercontent.com/u/862575?s=460&v=4"
-                alt="Helder Burato Berto"
-              />
-
-              <div className="user-info">
-                <strong>Helder Burato Berto</strong>
-                <span>ReactJS, React Native, NodeJS</span>
-              </div>
-            </header>
-
-            <p>
-              Front-end Developer • Learning, practicing and creating this is my
-              motto
-            </p>
-
-            <a href="https://github.com/helderburato">
-              Acessar perfil no Github
-            </a>
-          </li>
+              <a href={`https://github.com/${dev.github_username}`}>
+                Acessar perfil no Github
+              </a>
+            </li>
+          ))}
         </ul>
       </main>
     </div>

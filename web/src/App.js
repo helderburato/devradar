@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-import './global.css';
-import './app.css';
-import './sidebar.css';
-import './main.css';
+import './styles/main.css';
+import './styles/app.css';
+import './styles/sidebar.css';
 
 import api from './services/api';
 import DevForm from './components/DevForm';

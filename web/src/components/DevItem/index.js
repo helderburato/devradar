@@ -1,25 +1,25 @@
 import React from 'react';
 
-import './styles.css';
+import { DevContainer, DevHeader, DevUserInfo, DevBio, Link, DevName, DevTechs } from './styles';
 
 function DevItem({ dev }) {
   return (
-    <li className="dev-item">
-      <header>
+    <DevContainer>
+      <DevHeader>
         <img src={dev.avatar_url} alt={dev.name} />
 
-        <div className="user-info">
-          <strong>{dev.name}</strong>
-          <span>{dev.techs.join(', ')}</span>
-        </div>
-      </header>
+        <DevUserInfo>
+          <DevName>{dev.name}</DevName>
+          <DevTechs>{dev.techs.join(', ')}</DevTechs>
+        </DevUserInfo>
+      </DevHeader>
 
-      <p>{dev.bio}</p>
+      <DevBio>{dev.bio}</DevBio>
 
-      <a href={`https://github.com/${dev.github_username}`}>
+      <Link href={`https://github.com/${dev.github_username}`}>
         Acessar perfil no Github
-      </a>
-    </li>
+      </Link>
+    </DevContainer>
   );
 }
 

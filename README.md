@@ -1,6 +1,6 @@
 # DevRadar - OmniStack Week 10
 
-Project created in the Omnistack Week 10.
+> Project developed in the week OmniStack 10
 
 ## Stack
 
